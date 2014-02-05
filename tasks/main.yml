@@ -5,8 +5,12 @@
     regexp='^127.0.1.1'
     line="127.0.1.1{{'\t'}}{{ ansible_hostname }}"
 
+- name: Update package manager
+  apt:
+    update_cache=yes
+    cache_valid_time=43200
+
 - name: Base packages
   apt:
     pkg=ntp
     state=present
-    update_cache=yes
