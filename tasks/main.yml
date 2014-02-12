@@ -9,8 +9,9 @@
   apt:
     update_cache=yes
     cache_valid_time=43200
+  when: "'apt' == ansible_pkg_mgr"
 
 - name: Base packages
-  apt:
-    pkg=ntp
-    state=present
+  action: " {{ ansible_pkg_mgr }}
+    {{ 'pkg' if ansible_pkg_mgr == 'apt' else 'name' }}=ntp
+    state=present"
