@@ -1,0 +1,13 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import json
+from subprocess import Popen, PIPE
+from itertools import chain
+
+locale = Popen('locale', stdout=PIPE)
+stdout,nil = locale.communicate()
+
+print json.dumps({
+'locales':filter(None, set(chain(x.strip('"') for x in dict(x.split('=') for x in stdout.splitlines()).values())))
+})
