@@ -1,14 +1,14 @@
 ---
 - name: Ensure hostname resolution
   lineinfile:
-    dest=/etc/hosts
-    regexp='^127.0.1.1'
-    line="127.0.1.1{{'\t'}}{{ ansible_hostname }}{{'\t'}}{{ web_domain }}"
+    dest: /etc/hosts
+    regexp: '^127.0.1.1'
+    line: "127.0.1.1{{'\t'}}{{ ansible_hostname }}{{'\t'}}{{ web_domain }}"
 
 - name: Update package manager
   apt:
-    update_cache=yes
-    cache_valid_time=43200
+    update_cache: yes
+    cache_valid_time: 43200
   when: "'apt' == ansible_pkg_mgr"
 
 - name: Base packages
@@ -18,11 +18,11 @@
 
 - name: Grant ansible user impersonation privileges
   lineinfile:
-    dest=/etc/sudoers
-    state=present
-    insertafter=EOF
-    line='{{ ansible_ssh_user }} ALL=(ALL) NOPASSWD:ALL'
-    validate='visudo -cf %s'
+    dest: /etc/sudoers
+    state: present
+    insertafter: EOF
+    line: '{{ ansible_ssh_user }} ALL=(ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
 
 - name: Get used locales
   action: get_used_locales
@@ -30,10 +30,10 @@
 
 - name: Enable needed locales
   lineinfile:
-    dest=/etc/locale.gen
-    regexp="^# ({{ item }})(.*)"
-    backrefs=yes
-    line="\1\2"
+    dest: /etc/locale.gen
+    regexp: "^# ({{ item }})(.*)"
+    backrefs: yes
+    line: "\1\2"
   with_items:
     result.locales
   when: "'Debian' == ansible_distribution"
