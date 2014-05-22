@@ -1,15 +1,15 @@
 ---
 - name: restart haproxy
   service:
-    name=haproxy
-    state=restarted
+    name: haproxy
+    state: restarted
 
 - name: restart nginx
   service:
-    name=nginx
-    state=restarted
+    name: nginx
+    state: restarted
 
 - name: restart apache
   service:
-    name="{{ apache }}"
-    state=restarted
+    name: "{{ apache }}"
+    state: restarted
