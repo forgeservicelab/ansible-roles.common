@@ -33,7 +33,7 @@
     dest: /etc/locale.gen
     regexp: "^# ({{ item }})(.*)"
     backrefs: yes
-    line: "\1\2"
+    line: \1\2
   with_items:
     result.locales
   when: "'Debian' == ansible_distribution"
