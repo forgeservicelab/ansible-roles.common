@@ -28,8 +28,18 @@
   action: get_used_locales
   register: result
 
+- name: Enable needed locales
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: "^# ({{ item }})(.*)"
+    backrefs: yes
+    line: \1\2
+  with_items:
+    result.locales
+  when: ansible_distribution == "Debian"
+
 - name: Generate needed locales
   command: "locale-gen {{ item }}"
   with_items:
     result.locales
-  when: "'Debian' == ansible_os_family"
+  when: ansible_os_family == "Debian"
